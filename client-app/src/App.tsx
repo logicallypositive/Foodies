@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import axios from 'axios';
+import { Header, List } from 'semantic-ui-react';
 
 function App() {
   const [foods, setFoods] = useState([]);
@@ -14,15 +15,18 @@ function App() {
 
   return (
     <div>
-      <h1>We are foodies!</h1>
+      <Header as='h2' icon='food' content='Food List' />
 
       <ul>
         {foods.map((food: any) => (
-          <li key={food.id}>
-            <h2>{food.name}</h2>
-            <h3>Ingredients</h3>
-            {food.ingredients}
-          </li>
+          <List.Item key={food.id}>
+            <Header as='h3' content ={food.name}/>
+            <Header as='h4' content ='Ingredients'/>
+            <p>{food.ingredients}</p>
+            <Header as='h4' content ='Description'/>
+            <p>{food.description}</p>
+            <br />
+          </List.Item>
         ))}
       </ul>
 
