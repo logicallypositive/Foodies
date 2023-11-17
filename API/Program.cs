@@ -3,19 +3,31 @@ using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Services
+// Services
+//
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddDbContext<DataContext>(opt =>
+// Data Context
+builder.Services.AddDbContext<DataContext>(opt => 
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+// CORS
+builder.Services.AddCors(opt => 
+{
+    opt.AddPolicy("CorsPolicy", policy => 
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    });
 });
 
 var app = builder.Build();
 
 // Middleware
-app.UseHttpsRedirection();
+//
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 app.MapControllers();
 

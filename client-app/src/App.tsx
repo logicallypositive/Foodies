@@ -19,7 +19,9 @@ function App() {
       <ul>
         {foods.map((food: any) => (
           <li key={food.id}>
-            {food.name}
+            <h2>{food.name}</h2>
+            <h3>Ingredients</h3>
+            {food.ingredients}
           </li>
         ))}
       </ul>
