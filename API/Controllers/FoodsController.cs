@@ -11,16 +11,11 @@ namespace API.Controllers
 {
     public class FoodsController : BaseAPIController
     {
-        private readonly IMediator _mediator;
-        public FoodsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
         [HttpGet] // api/foods
         public async Task<ActionResult<List<Food>>> GetFoods()
         {
-            return await _mediator.Send(new List.Query());
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")] // api/foods/id
