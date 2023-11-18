@@ -1,11 +1,15 @@
+using Application.Foods;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Services
-//
+
+//    Services    //
+
+
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 
 // Data Context
@@ -23,17 +27,23 @@ builder.Services.AddCors(opt =>
     });
 });
 
+// MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
+
 var app = builder.Build();
 
-// Middleware
-//
+
+//    Middleware    //
+
+
 app.UseCors("CorsPolicy");
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
-
 try
 {
     var context = services.GetRequiredService<DataContext>();
